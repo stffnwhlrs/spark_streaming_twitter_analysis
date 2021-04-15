@@ -130,3 +130,7 @@ dmypy.json
 
 # vscode stuff
 .vscode/
+
+# others
+tmp.py
+tweet_example.json

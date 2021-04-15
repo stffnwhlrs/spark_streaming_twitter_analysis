@@ -1,35 +1,33 @@
-# https://towardsdatascience.com/using-kafka-to-optimize-data-flow-of-your-twitter-stream-90523d25f3e8
-"""API ACCESS KEYS"""
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler
+from tweepy import Stream
+from confluent_kafka import Producer
+import socket
+import argparse
+import json
 
+# Twitter credentials steffen
 access_token = "929886734-cDN321qqWfQPAROumjI6IIwLBf4pSpexMOl9opHs"
 access_token_secret = "rvjfwEn9MRAiWkH3XSHMi0ZV3JLLFtNhJjaElFTzKfwr0"
 consumer_key = "tXskNrFeWAEqiqGauybTLdHOP"
 consumer_secret = "YJS9pd99pMFkY3khU9eu0Mz47cfePNNGwNlcXPEeHTtgzzf94a"
 
-
-from tweepy.streaming import StreamListener
-from tweepy import OAuthHandler
-from tweepy import Stream
-
-from confluent_kafka import Producer
-
-import socket
-
-import argparse
-
-
+# Used to select different modes
+# normal: send to kafka topic
+# debug: only print in terminal
 parser = argparse.ArgumentParser()
 parser.add_argument("action", choices=['normal', 'debug'])
 args = parser.parse_args()
 
-
+# Configure and create kafka producer
 conf = {'bootstrap.servers': "localhost:9092",
         'client.id': socket.gethostname()}
 producer = Producer(conf)
 
+# topic to write to
 topic_name = "twitterPublic"
 
-
+# Twitter authentication
 class twitterAuth():
     """SET UP TWITTER AUTHENTICATION"""
 
@@ -40,7 +38,7 @@ class twitterAuth():
         return auth
 
 
-
+# Twitter streaming handler
 class TwitterStreamer():
 
     """SET UP STREAMER"""
@@ -58,11 +56,17 @@ class TwitterStreamer():
 class ListenerTS(StreamListener):
 
     def on_data(self, raw_data):
+        tweet_raw = json.loads(raw_data)
+        tweet = {
+            "full_text": tweet["extended_tweet"]["full_text"],
+        }
+        tweet_str = json.dumps(tweet)
+
         if args.action == "normal":
-            producer.produce(topic_name, str.encode(raw_data))
+            producer.produce(topic_name, str.encode(tweet_str))
             return True
         if args.action == "debug":
-            print(raw_data)
+            print(tweet_str)
 
 
 if __name__ == "__main__":

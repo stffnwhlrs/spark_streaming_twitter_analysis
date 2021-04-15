@@ -15,6 +15,13 @@ from confluent_kafka import Producer
 
 import socket
 
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("action", choices=['normal', 'debug'])
+args = parser.parse_args()
+
 
 conf = {'bootstrap.servers': "localhost:9092",
         'client.id': socket.gethostname()}
@@ -45,15 +52,19 @@ class TwitterStreamer():
             listener = ListenerTS() 
             auth = self.twitterAuth.authenticateTwitterApp()
             stream = Stream(auth, listener)
-            #stream.filter(track=["Apple"], stall_warnings=True, languages= ["en"])
             stream.sample(stall_warnings=True, languages= ["en"])
+
+            if args.
 
 
 class ListenerTS(StreamListener):
 
     def on_data(self, raw_data):
+        if args.action == "normal":
             producer.produce(topic_name, str.encode(raw_data))
             return True
+        if args.action == "debug":
+            print(raw_data)
 
 
 if __name__ == "__main__":

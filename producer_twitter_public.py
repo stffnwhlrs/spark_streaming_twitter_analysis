@@ -54,8 +54,6 @@ class TwitterStreamer():
             stream = Stream(auth, listener)
             stream.sample(stall_warnings=True, languages= ["en"])
 
-            if args.
-
 
 class ListenerTS(StreamListener):
 

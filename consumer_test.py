@@ -14,7 +14,7 @@ def display_message(message):
 
 
 conf = {'bootstrap.servers': "localhost:9092",
-        'auto.offset.reset': 'smallest',
+        'auto.offset.reset': 'latest',
         'group.id': "IE"}
 
 consumer = Consumer(conf)

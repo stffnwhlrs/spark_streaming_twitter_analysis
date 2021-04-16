@@ -58,7 +58,7 @@ class ListenerTS(StreamListener):
     def on_data(self, raw_data):
         tweet_raw = json.loads(raw_data)
         tweet = {
-            "full_text": tweet_raw["extended_tweet"]["full_text"],
+            "text": tweet_raw["text"],
         }
         tweet_str = json.dumps(tweet)
 
@@ -66,7 +66,6 @@ class ListenerTS(StreamListener):
             producer.produce(topic_name, str.encode(tweet_str))
             return True
         if args.action == "debug":
-            print("raw_data",raw_data)
             print("tweet_str",tweet_str)
 
 

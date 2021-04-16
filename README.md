@@ -20,7 +20,7 @@ sudo bash setup_kafka_env.sh
 ```
 
 # 2. Run Producer: Twitter public
-The twitter public producer fetches sample tweets from Twitter and publish them into the *twitterPublic* topic. The producer only inserts the *extended_tweet* field (the entire text message) of the whole tweet object to reduce the payload of the event. The producer can be run in two different modes which can be specified when executing the python script:
+The twitter public producer fetches sample tweets from Twitter and publish them into the *twitterPublic* topic. The producer only inserts the *text* field (the text message) of the whole tweet object to reduce the payload of the event. The producer can be run in two different modes which can be specified when executing the python script:
 - `normal`: Publish data to the topic
 - `debug`: Print data to the terminal
 

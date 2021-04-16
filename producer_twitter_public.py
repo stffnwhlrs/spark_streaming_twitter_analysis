@@ -7,10 +7,10 @@ import argparse
 import json
 
 # Twitter credentials steffen
-access_token = "929886734-cDN321qqWfQPAROumjI6IIwLBf4pSpexMOl9opHs"
-access_token_secret = "rvjfwEn9MRAiWkH3XSHMi0ZV3JLLFtNhJjaElFTzKfwr0"
-consumer_key = "tXskNrFeWAEqiqGauybTLdHOP"
-consumer_secret = "YJS9pd99pMFkY3khU9eu0Mz47cfePNNGwNlcXPEeHTtgzzf94a"
+access_token = "929886734-bnhLGa6cLzn9RKRZN1ydy50So6KVx8Bonwh2ynMH"
+access_token_secret = "1L4KdxrDYbKmGViLo1zsLl3qeeSYIIGQm7LSqGEdB1xCd"
+consumer_key = "KTLTyI9eQL1R3nv5ko8PJ4wrn"
+consumer_secret = "l6zjKXJfiIkWUhhinZoEHyodhK2v6Jk6ng6X96rLhRYVwaB2pH"
 
 # Used to select different modes
 # normal: send to kafka topic
@@ -66,7 +66,8 @@ class ListenerTS(StreamListener):
             producer.produce(topic_name, str.encode(tweet_str))
             return True
         if args.action == "debug":
-            print(tweet_str)
+            print("raw_data",raw_data)
+            print("tweet_str",tweet_str)
 
 
 if __name__ == "__main__":

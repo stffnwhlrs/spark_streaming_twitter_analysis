@@ -5,12 +5,13 @@ from confluent_kafka import Producer
 import socket
 import argparse
 import json
+import global_vars
 
 # Twitter credentials steffen
-access_token = "929886734-bnhLGa6cLzn9RKRZN1ydy50So6KVx8Bonwh2ynMH"
-access_token_secret = "1L4KdxrDYbKmGViLo1zsLl3qeeSYIIGQm7LSqGEdB1xCd"
-consumer_key = "KTLTyI9eQL1R3nv5ko8PJ4wrn"
-consumer_secret = "l6zjKXJfiIkWUhhinZoEHyodhK2v6Jk6ng6X96rLhRYVwaB2pH"
+access_token = global_vars.twitter_access_token
+access_token_secret = global_vars.twitter_access_token_secret
+consumer_key = global_vars.twitter_consumer_key
+consumer_secret = global_vars.twitter_consumer_secret
 
 # Used to select different modes
 # normal: send to kafka topic

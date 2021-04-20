@@ -51,6 +51,7 @@ class TwitterStreamer():
             listener = ListenerTS() 
             auth = self.twitterAuth.authenticateTwitterApp()
             stream = Stream(auth, listener)
+            # Get sample data from twitter
             stream.sample(stall_warnings=True, languages= ["en"])
 
 

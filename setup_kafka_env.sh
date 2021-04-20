@@ -6,7 +6,7 @@ echo "Start Kafka setup"
 sudo service kafka start
 
 # Wait until Kafka started
-sleep 3
+sleep 5
 # Kafka status
 systemctl is-active --quiet kafka && echo "Kafka is running."
 

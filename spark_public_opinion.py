@@ -10,7 +10,7 @@ ssc = StreamingContext(sc, 5)
 
 print("succes!!!!!!!!!!!")
 
-df = scc \
+df = ssc \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \

@@ -1,19 +1,12 @@
 
-from pyspark import SparkContext
-from pyspark.streaming import StreamingContext
-from pyspark.streaming.kafka import KafkaUtils
-import json
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import explode
+from pyspark.sql.functions import split
 
-# create spark configuration
-sc = SparkContext("local[2]", "TwitterWordCount")
-sc.setLogLevel("ERROR")
-ssc = StreamingContext(sc, 5)
-
-kafkaStream = KafkaUtils.createStream(ssc, 'localhost:2181', 'spark-streaming', {'publicOpinion':1})
-
-
-
-
+spark = SparkSession \
+    .builder \
+    .appName("StructuredNetworkWordCount") \
+    .getOrCreate()
 
 if __name__ == "__main__":
     print("lol")

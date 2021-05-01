@@ -5,7 +5,7 @@ from pyspark.sql.functions import split
 from pyspark.sql.functions import udf
 from time import sleep
 import re
-from pyspark.streaming.kafka import KafkaUtils
+#from pyspark.streaming.kafka import KafkaUtils
 import pyspark.sql.functions as f
 from pyspark.sql.functions import lit
 

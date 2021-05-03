@@ -46,17 +46,14 @@ def send_file(file_path, topic):
 if args.action == "manually":
     if args.topic == None:
         print("Specify topic")
-        return
 
     send_message(args.topic)
 
 elif args.action == "file":
     if args.topic == None:
         print("Specify topic")
-        return
     if args.file == None:
         print("Specify file")
-        return
 
     send_file(args.file, args.topic)
 

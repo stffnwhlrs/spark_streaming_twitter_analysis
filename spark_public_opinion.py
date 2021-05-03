@@ -14,6 +14,8 @@ spark = SparkSession.builder\
                     .appName('Tweet Sentiment Analysis')\
                     .getOrCreate()
 
+spark.sparkContext.setLogLevel("ERROR")
+
 
 raw_input = spark \
   .readStream \

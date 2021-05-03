@@ -11,12 +11,12 @@ spark = SparkSession.builder\
 
 spark.sparkContext.setLogLevel("ERROR")
 
-
+# Create the schema for input data
 schema = StructType([ \
   StructField("text", StringType(), True) \
     ])
 
-
+# Get the stream
 raw_input = spark \
   .readStream \
   .format("kafka") \
@@ -26,22 +26,25 @@ raw_input = spark \
   .option("failOnDataLoss", "false") \
   .load()
 
+# Transform byte code to string
 raw_input = raw_input.selectExpr("CAST(value AS STRING)")
 
-
-
+# Check if the stream is running
 print("Are we streaming? " + str(raw_input.isStreaming))
 
+# print schema of the raw input
 print("Data Schema:")
 raw_input.printSchema()
 
+# Transform value information to a to column and a new df
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
+# print schema of the new structured stream
 print("Data Schema:")
 tweets.printSchema()
 
+# Select only the text of the df and create new df
 tweets_text = tweets.select(tweets.tweet.text)
-
 
 
 # Start running the query that prints the running counts to the console

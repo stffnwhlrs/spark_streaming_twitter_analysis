@@ -44,7 +44,7 @@ def send_file(file_path, topic):
 
 # Action dispatching
 if args.action == "manually":
-    if args.topic = None:
+    if args.topic == None:
         print("Specify topic")
         return
 

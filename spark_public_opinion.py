@@ -28,7 +28,7 @@ raw_input = spark \
   .option("failOnDataLoss", "false") \
   .load()
 
-raw_input = raw_input.selectExpr("CAST(value AS STRING)"
+raw_input = raw_input.selectExpr("CAST(value AS STRING)")
 
 print("Are we streaming? " + str(raw_input.isStreaming))
 

@@ -50,14 +50,14 @@ tweets_text = tweets.select(tweets.tweet.text)
 def get_content(tweet):
   tesla = ["Tesla", "tesla"]
   
-  if any(map(map(tweet.__contains__, words))):
+  if any(map(map(tweet.__contains__, tesla))):
     return "tesla"
   else: 
     return "-"
 
 get_content_udf = udf(get_content, StringType())
 
-tweets_text = tweets_text(witColumn("content", get_content_udf("tweet.text")))
+tweets_text = tweets_text.withColumn("content", get_content_udf("tweet.text"))
   
 
 

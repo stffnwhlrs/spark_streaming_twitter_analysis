@@ -58,12 +58,14 @@ def get_content(tweet):
 
 get_content_udf = udf(get_content, StringType())
 
-tweets_text = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
+tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
+tweets_content_count = tweets_content_count.groubBy("content").count()
+
   
 
 
 # Start running the query that prints the running counts to the console
-query = tweets_text \
+query = tweets_content_count \
     .writeStream \
     .outputMode("append") \
     .format("console") \

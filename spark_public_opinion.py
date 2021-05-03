@@ -44,7 +44,7 @@ print("Data Schema:")
 tweets.printSchema()
 
 # Select only the text of the df and create new df
-tweets_text = tweets.select(tweets.C)
+tweets_text = tweets.select(tweets.tweet.text)
 
 
 def get_content(tweet):
@@ -57,7 +57,7 @@ def get_content(tweet):
 
 get_content_udf = udf(get_content, StringType())
 
-tweets_text = tweets_text(witColumn("content", get_content_udf("get_content_udf")))
+tweets_text = tweets_text(witColumn("content", get_content_udf("tweet.text")))
   
 
 

@@ -58,7 +58,7 @@ def get_content(tweet):
 
 get_content_udf = udf(get_content, StringType())
 
-tweets_text = tweets_text.withColumn("content", get_content_udf(tweets_text.tweet.text))
+tweets_text = tweets_text.withColumn("content", get_content_udf(tweets_text.tweet))
   
 
 

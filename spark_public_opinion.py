@@ -2,7 +2,7 @@ from pyspark import SparkConf, SparkContext
 from pyspark.streaming import StreamingContext
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
-from import pyspark.sql.functions pyspark.sql.functions import *
+from pyspark.sql.functions pyspark.sql.functions import *
 
 
 spark = SparkSession.builder\

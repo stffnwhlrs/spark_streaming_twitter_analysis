@@ -51,10 +51,10 @@ if args.action == "manually":
     send_message(args.topic)
 
 elif args.action == "file":
-    if args.topic = None:
+    if args.topic == None:
         print("Specify topic")
         return
-    if args.file = None:
+    if args.file == None:
         print("Specify file")
         return
 

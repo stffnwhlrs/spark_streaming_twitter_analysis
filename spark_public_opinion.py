@@ -59,7 +59,7 @@ def get_content(tweet):
 get_content_udf = udf(get_content, StringType())
 
 tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
-tweets_content_count = tweets_content_count.groubBy("content").count()
+tweets_content_count = tweets_content_count.groupBy("content").count()
 
   
 

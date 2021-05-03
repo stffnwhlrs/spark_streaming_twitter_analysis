@@ -15,7 +15,7 @@ spark = SparkSession.builder\
                     .getOrCreate()
 
 
-location = spark \
+raw_input = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
@@ -24,10 +24,16 @@ location = spark \
   .option("failOnDataLoss", "false") \
   .load()
 
-location = location.selectExpr("CAST(value AS STRING)")
+raw_input = raw_input.selectExpr("CAST(value AS STRING)")
 
-print("Are we streaming? " + str(location.isStreaming))
+print("Are we streaming? " + str(raw_input.isStreaming))
+
+print("Data Schema:")
+raw_input.printSchema()
 
 
 if __name__ == "__main__":
     print("lol")
+
+
+# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py

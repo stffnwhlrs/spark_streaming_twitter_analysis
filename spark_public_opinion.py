@@ -35,13 +35,12 @@ raw_input.printSchema()
 
 
 # Start running the query that prints the running counts to the console
-#query = raw_input \
-#    .writeStream \
-#    .outputMode("append") \
-#    .format("console") \
-#    .start()
+query = raw_input \
+    .writeStream \
+    .outputMode("append") \
+    .format("console") \
+    .start()
 
-raw_input.pprint()
 
 query.awaitTermination()
 

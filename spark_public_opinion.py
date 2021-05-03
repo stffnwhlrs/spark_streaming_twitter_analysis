@@ -3,7 +3,7 @@ from pyspark.streaming import StreamingContext
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as f
 from pyspark.sql.functions import lit
-import pyspark.sql.types._
+from pyspark.sql.types import *
 import pyspark.sql.functions.from_json
 
 

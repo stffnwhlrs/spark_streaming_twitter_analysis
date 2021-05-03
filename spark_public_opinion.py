@@ -36,10 +36,11 @@ print("Data Schema:")
 raw_input.printSchema()
 
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
-tweets_text = tweets.select(tweets.tweets.text)
 
 print("Data Schema:")
 tweets.printSchema()
+
+tweets_text = tweets.select(tweets.tweets.text)
 
 
 

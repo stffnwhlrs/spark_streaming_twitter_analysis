@@ -39,12 +39,12 @@ raw_input.printSchema()
 # Transform value information to a to column and a new df
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
+# Select only the text of the df and create new df
+tweets_text = tweets.select(tweets.tweet.text)
+
 # print schema of the new structured stream
 print("Data Schema:")
 tweets.printSchema()
-
-# Select only the text of the df and create new df
-tweets_text = tweets.select(tweets.tweet.text)
 
 
 def get_content(tweet):

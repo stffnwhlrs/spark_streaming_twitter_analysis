@@ -65,9 +65,11 @@ tweets_content_count = tweets_content_count.groupBy("content").count()
 
 
 # Start running the query that prints the running counts to the console
+# use append for non aggregated data
+# use complete for aggregation
 query = tweets_content_count \
     .writeStream \
-    .outputMode("append") \
+    .outputMode("complete") \
     .format("console") \
     .start()
 

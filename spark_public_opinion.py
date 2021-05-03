@@ -44,7 +44,7 @@ tweets_text = tweets.select(tweets.tweet.text)
 
 # print schema of the new structured stream
 print("Data Schema:")
-tweets.printSchema()
+tweets_text.printSchema()
 
 
 def get_content(tweet):

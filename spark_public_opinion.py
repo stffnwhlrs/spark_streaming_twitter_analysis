@@ -28,13 +28,17 @@ raw_input = spark \
 
 raw_input = raw_input.selectExpr("CAST(value AS STRING)")
 
+
+
 print("Are we streaming? " + str(raw_input.isStreaming))
-
-tweets = raw_input.select(from_json(raw_input.text, schema))
-
 
 print("Data Schema:")
 tweets.printSchema()
+
+tweets = raw_input.select(from_json(raw_input.value, schema))
+
+
+
 
 
 # Start running the query that prints the running counts to the console

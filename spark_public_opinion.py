@@ -35,7 +35,7 @@ raw_input.printSchema()
 # Start running the query that prints the running counts to the console
 query = raw_input \
     .writeStream \
-    .outputMode("complete") \
+    .outputMode("append") \
     .format("console") \
     .start()
 

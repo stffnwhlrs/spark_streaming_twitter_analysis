@@ -35,7 +35,7 @@ print("Are we streaming? " + str(raw_input.isStreaming))
 print("Data Schema:")
 raw_input.printSchema()
 
-tweets = raw_input.select(from_json(raw_input.value, schema))
+tweets = raw_input.select(from_json(raw_input.value), schema))
 
 print("Data Schema:")
 tweets.printSchema()
@@ -43,7 +43,7 @@ tweets.printSchema()
 
 
 # Start running the query that prints the running counts to the console
-query = raw_input \
+query = tweets \
     .writeStream \
     .outputMode("append") \
     .format("console") \

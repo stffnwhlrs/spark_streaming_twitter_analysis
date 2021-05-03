@@ -3,8 +3,8 @@ from pyspark.streaming import StreamingContext
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as f
 from pyspark.sql.functions import lit
-import org.apache.spark.sql.types._
-import org.apache.spark.sql.functions.from_json
+import pyspark.sql.types._
+import pyspark.sql.functions.from_json
 
 
 spark = SparkSession.builder\

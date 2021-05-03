@@ -33,11 +33,12 @@ raw_input = raw_input.selectExpr("CAST(value AS STRING)")
 print("Are we streaming? " + str(raw_input.isStreaming))
 
 print("Data Schema:")
-tweets.printSchema()
+raw_input.printSchema()
 
 tweets = raw_input.select(from_json(raw_input.value, schema))
 
-
+print("Data Schema:")
+tweets.printSchema()
 
 
 

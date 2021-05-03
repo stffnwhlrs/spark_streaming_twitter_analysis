@@ -44,7 +44,21 @@ print("Data Schema:")
 tweets.printSchema()
 
 # Select only the text of the df and create new df
-tweets_text = tweets.select(tweets.tweet.text)
+tweets_text = tweets.select(tweets.C)
+
+
+def get_content(tweet):
+  tesla = ["Tesla", "tesla"]
+  
+  if any(map(map(tweet.__contains__, words))):
+    return "tesla"
+  else: 
+    return "-"
+
+get_content_udf = udf(get_content, StringType())
+
+tweets_text = tweets_text(witColumn("content", get_content_udf("get_content_udf")))
+  
 
 
 # Start running the query that prints the running counts to the console

@@ -32,6 +32,16 @@ print("Data Schema:")
 raw_input.printSchema()
 
 
+# Start running the query that prints the running counts to the console
+query = raw_input \
+    .writeStream \
+    .outputMode("complete") \
+    .format("console") \
+    .start()
+
+query.awaitTermination()
+
+
 if __name__ == "__main__":
     print("lol")
 

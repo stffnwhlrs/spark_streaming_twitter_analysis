@@ -50,11 +50,13 @@ tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
 def get_content(tweet):
   tesla = ["Tesla", "tesla"]
+
+  return tweet
   
-  if any(map(map(tweet.__contains__, tesla))):
-    return "tesla"
-  else: 
-    return "-"
+  #if any(map(map(tweet.__contains__, tesla))):
+  #  return "tesla"
+  #else: 
+  #  return "-"
 
 get_content_udf = udf(get_content, StringType())
 

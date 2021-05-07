@@ -13,7 +13,7 @@ spark.sparkContext.setLogLevel("ERROR")
 
 # Create the schema for input data
 schema = StructType([ \
-  StructField("text", StringType(), True,)
+  StructField("text", StringType(), True),
   StructField("created_at", StringType(), True) \
     ])
 

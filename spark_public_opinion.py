@@ -37,39 +37,19 @@ print("Are we streaming? " + str(raw_input.isStreaming))
 print("Data Schema: raw_input")
 raw_input.printSchema()
 
-# Transform value information to a to column and a new df
+# Transform value information to a column
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
-# print schema of the raw input
-print("Data Schema tweets:")
-tweets.printSchema()
-
-#Select only the text of the df and create new df
+#Select only the text and insert process time
 tweets = tweets.select(col("tweet.text").alias("tweet")).withColumn("process_time", current_timestamp())
 
 # print schema of the new structured stream
 print("Data Schema tweets:")
 tweets.printSchema()
 
-#tweets = tweets.select(col("created_at"), to_timestamp(col("created_at"), 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
+# Extract the content of the tweet
+tweets = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
 
-#tweets = tweets.select(tweets.tweet.created_at)
-
-#tweets = tweets.select(tweets.tweet.created_at, to_timestamp(tweets.tweet.created_at, 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
-
-
-def get_content(tweet):
-  tesla = ["Tesla", "tesla"]
-  
-  if any(map(tweet.__contains__, tesla)):
-    return "tesla"
-  else: 
-    return "-"
-
-get_content_udf = udf(get_content, StringType())
-
-#tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
-# tweets_content_count = tweets_content_count.groupBy("content").count()
 
   
 
@@ -85,6 +65,19 @@ query = tweets \
 
 
 query.awaitTermination()
+
+
+# ------ HELPER FUNCTIONS -------
+
+def get_content(tweet):
+  tesla = ["Tesla", "tesla"]
+  
+  if any(map(tweet.__contains__, tesla)):
+    return "tesla"
+  else: 
+    return "-"
+
+get_content_udf = udf(get_content, StringType())
 
 
 if __name__ == "__main__":

@@ -4,6 +4,21 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 
+# ------ HELPER FUNCTIONS -------
+
+def get_content(tweet):
+  tesla = ["Tesla", "tesla"]
+  
+  if any(map(tweet.__contains__, tesla)):
+    return "tesla"
+  else: 
+    return "-"
+
+get_content_udf = udf(get_content, StringType())
+
+
+# ------ SPARK PROCESS -------
+
 
 spark = SparkSession.builder\
                     .appName('Tweet Sentiment Analysis')\
@@ -65,19 +80,6 @@ query = tweets \
 
 
 query.awaitTermination()
-
-
-# ------ HELPER FUNCTIONS -------
-
-def get_content(tweet):
-  tesla = ["Tesla", "tesla"]
-  
-  if any(map(tweet.__contains__, tesla)):
-    return "tesla"
-  else: 
-    return "-"
-
-get_content_udf = udf(get_content, StringType())
 
 
 if __name__ == "__main__":

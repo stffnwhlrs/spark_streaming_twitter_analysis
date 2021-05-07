@@ -45,18 +45,17 @@ print("Data Schema tweets:")
 tweets.printSchema()
 
 #Select only the text of the df and create new df
-tweets_text = tweets.select(col("tweet.text").alias("tweet")) \
-  .withColumn("process_time", current_timestamp())
+tweets = tweets.select(col("tweet.text").alias("tweet")).withColumn("process_time", current_timestamp())
 
 # print schema of the new structured stream
-print("Data Schema tweets_text:")
-tweets_text.printSchema()
+print("Data Schema tweets:")
+tweets.printSchema()
 
-#tweets_text = tweets_text.select(col("created_at"), to_timestamp(col("created_at"), 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
+#tweets = tweets.select(col("created_at"), to_timestamp(col("created_at"), 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
 
-#tweets_text = tweets_text.select(tweets_text.tweet.created_at)
+#tweets = tweets.select(tweets.tweet.created_at)
 
-#tweets_text = tweets_text.select(tweets_text.tweet.created_at, to_timestamp(tweets_text.tweet.created_at, 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
+#tweets = tweets.select(tweets.tweet.created_at, to_timestamp(tweets.tweet.created_at, 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
 
 
 def get_content(tweet):
@@ -78,7 +77,7 @@ get_content_udf = udf(get_content, StringType())
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation
-query = tweets_text \
+query = tweets \
     .writeStream \
     .outputMode("append") \
     .format("console") \

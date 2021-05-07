@@ -44,7 +44,7 @@ tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 print("Data Schema tweets:")
 tweets.printSchema()
 
-Select only the text of the df and create new df
+#Select only the text of the df and create new df
 tweets_text = tweets.select(tweets.tweet.text, tweets.tweet.created_at)
 #tweets_text = tweets_text.selectExpr("tweet.text as tweet")
 

@@ -63,7 +63,7 @@ print("Data Schema tweets:")
 tweets.printSchema()
 
 # Extract the content of the tweet
-tweets = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
+tweets = tweets.withColumn("content", get_content_udf(col("tweet")))
 
 
   

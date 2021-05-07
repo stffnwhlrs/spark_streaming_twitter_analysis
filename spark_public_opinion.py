@@ -34,11 +34,15 @@ raw_input = raw_input.selectExpr("CAST(value AS STRING)")
 print("Are we streaming? " + str(raw_input.isStreaming))
 
 # print schema of the raw input
-print("Data Schema:")
+print("Data Schema: raw_input")
 raw_input.printSchema()
 
 # Transform value information to a to column and a new df
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
+
+# print schema of the raw input
+print("Data Schema tweets:")
+tweets.printSchema()
 
 # Select only the text of the df and create new df
 #tweets_text = tweets.select(tweets.tweet.text)
@@ -59,7 +63,7 @@ def get_content(tweet):
 
 get_content_udf = udf(get_content, StringType())
 
-tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
+#tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
 # tweets_content_count = tweets_content_count.groupBy("content").count()
 
   
@@ -68,7 +72,7 @@ tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation
-query = tweets_content_count \
+query = tweets \
     .writeStream \
     .outputMode("append") \
     .format("console") \

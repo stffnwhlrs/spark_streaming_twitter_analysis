@@ -45,9 +45,9 @@ print("Data Schema tweets:")
 tweets.printSchema()
 
 #Select only the text of the df and create new df
-#tweets_text = tweets.select(tweets.tweet.text, tweets.tweet.created_at)
-tweets_text = tweets.select(col("tweet.text").alias("tweet"), col("tweet.created_at").alias("created_at"))
-#tweets_text = tweets_text.selectExpr("tweet.text as tweet")
+tweets_text = tweets.select(\
+  col("tweet.text").alias("tweet"), \
+  col("tweet.created_at").alias("created_at"))
 
 # print schema of the new structured stream
 print("Data Schema tweets_text:")

@@ -13,7 +13,8 @@ spark.sparkContext.setLogLevel("ERROR")
 
 # Create the schema for input data
 schema = StructType([ \
-  StructField("text", StringType(), True) \
+  StructField("text", StringType(), True,)
+  StructField("created_at", StringType(), True) \
     ])
 
 # Get the stream
@@ -59,7 +60,7 @@ def get_content(tweet):
 get_content_udf = udf(get_content, StringType())
 
 tweets_content_count = tweets.withColumn("content", get_content_udf(tweets.tweet.text))
-tweets_content_count = tweets_content_count.groupBy("content").count()
+# tweets_content_count = tweets_content_count.groupBy("content").count()
 
   
 
@@ -69,7 +70,7 @@ tweets_content_count = tweets_content_count.groupBy("content").count()
 # use complete for aggregation
 query = tweets_content_count \
     .writeStream \
-    .outputMode("complete") \
+    .outputMode("append") \
     .format("console") \
     .start()
 

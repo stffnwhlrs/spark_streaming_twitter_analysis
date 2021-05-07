@@ -52,7 +52,7 @@ tweets_text = tweets.select(tweets.tweet.text, tweets.tweet.created_at)
 print("Data Schema tweets_text:")
 tweets_text.printSchema()
 
-tweets_text = tweets_text.select("tweet.created_at")
+tweets_text = tweets_text.select(tweets_text.tweet.created_at)
 
 #tweets_text = tweets_text.select(tweets_text.tweet.created_at, to_timestamp(tweets_text.tweet.created_at, 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
 

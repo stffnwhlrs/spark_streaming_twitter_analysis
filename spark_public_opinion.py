@@ -44,13 +44,13 @@ tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 print("Data Schema tweets:")
 tweets.printSchema()
 
-# Select only the text of the df and create new df
-#tweets_text = tweets.select(tweets.tweet.text)
+Select only the text of the df and create new df
+tweets_text = tweets.select(tweets.tweet.text, tweets.tweet.created_at)
 #tweets_text = tweets_text.selectExpr("tweet.text as tweet")
 
 # print schema of the new structured stream
-#print("Data Schema tweets_text:")
-#tweets_text.printSchema()
+print("Data Schema tweets_text:")
+tweets_text.printSchema()
 
 
 def get_content(tweet):
@@ -72,7 +72,7 @@ get_content_udf = udf(get_content, StringType())
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation
-query = tweets \
+query = tweets_text \
     .writeStream \
     .outputMode("append") \
     .format("console") \

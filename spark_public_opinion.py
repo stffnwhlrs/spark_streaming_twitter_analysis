@@ -45,14 +45,15 @@ print("Data Schema tweets:")
 tweets.printSchema()
 
 #Select only the text of the df and create new df
-tweets_text = tweets.select(tweets.tweet.text, tweets.tweet.created_at)
+#tweets_text = tweets.select(tweets.tweet.text, tweets.tweet.created_at)
+tweets_text = tweets.select(col("tweet.text".alias("tweet")), col("tweet.created_at").alias("created_at"))
 #tweets_text = tweets_text.selectExpr("tweet.text as tweet")
 
 # print schema of the new structured stream
 print("Data Schema tweets_text:")
 tweets_text.printSchema()
 
-tweets_text = tweets_text.select(tweets_text.tweet.created_at)
+#tweets_text = tweets_text.select(tweets_text.tweet.created_at)
 
 #tweets_text = tweets_text.select(tweets_text.tweet.created_at, to_timestamp(tweets_text.tweet.created_at, 'EEE MMM d HH:mm:ss z yyyy').alias('date'))
 

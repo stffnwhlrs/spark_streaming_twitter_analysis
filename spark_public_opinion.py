@@ -63,8 +63,10 @@ print("Data Schema tweets:")
 tweets.printSchema()
 
 # Extract the content of the tweet
-tweets = tweets.withColumn("content", get_content_udf(col("tweet")))
+tweets = tweets.withColumn("company", get_content_udf(col("tweet")))
 
+# Filter not interesting tweets
+tweets = tweets.filter()
 
 
 # Specify windowing
@@ -75,8 +77,15 @@ window_length = "10 seconds"
 tweets_aggregated = tweets \
 .withWatermark("process_time", window_length).groupBy(
   window(tweets.process_time, window_length),
-  tweets.content
+  tweets.company
   ).count()
+
+
+# Fit schema for output
+tweets_aggregated.select( \
+  col("company")
+  col("count").alias("tweet_count")
+)
 
 
 

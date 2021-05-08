@@ -83,7 +83,7 @@ tweets_aggregated = tweets \
 
 # Fit schema for output
 tweets_aggregated.select( \
-  col("company"),
+  col("company"), \
   col("count").alias("tweet_count")
 )
 

@@ -69,12 +69,12 @@ tweets = tweets.withColumn("content", get_content_udf(col("tweet")))
 
 # Specify windowing
 window_length = "10 seconds"
-sliding_interval = "0 seconds"
+# sliding_interval = "0 seconds"
 
 # Aggreagte tweets
 tweets_aggregated = tweets \
 .withWatermark("process_time", window_length).groupBy(
-  window(tweets.process_time, window_length, sliding_interval),
+  window(tweets.process_time, window_length),
   tweets.content
   ).count()
 

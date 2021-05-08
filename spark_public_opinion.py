@@ -159,7 +159,7 @@ tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sent
 tweets_aggregated = tweets_aggregated.select( \
   col("company"),
   col("sentiment_positive"),
-  col("sentiment_negative")
+  col("sentiment_negative"),
   col("count").alias("tweet_count")
 )
 
@@ -180,7 +180,7 @@ if args.action == "console":
     .outputMode("update") \
     .format("console") \
     .start()
-elif args.action == "topic"
+elif args.action == "topic":
   output = tweets_aggregated \
     .writeStream \
     .outputMode("update") \
@@ -196,4 +196,4 @@ if __name__ == "__main__":
 
 
 
-# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py
+# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py console

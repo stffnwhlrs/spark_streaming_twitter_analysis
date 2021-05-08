@@ -66,7 +66,7 @@ tweets.printSchema()
 tweets = tweets.withColumn("content", get_content_udf(col("tweet")))
 
 tweets_aggregated = tweets \
-.withWatermark("process_time", "10 seconds") \
+.withWatermark(tweets.process_time, "10 seconds") \
 .groupBy(
   window(tweets.process_time, "10 seconds"),
   tweets.content

@@ -66,7 +66,7 @@ tweets.printSchema()
 tweets = tweets.withColumn("company", get_content_udf(col("tweet")))
 
 # Filter not interesting tweets
-tweets = tweets.filter()
+tweets = tweets.filter(~col("company") == "-")
 
 
 # Specify windowing

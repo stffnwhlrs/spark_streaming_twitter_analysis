@@ -123,7 +123,8 @@ tweets = tweets.withColumn("company", get_content_udf(col("tweet")))
 tweets = tweets.filter(~(tweets.company == "-"))
 
 # Add sentiment
-tweets = tweets.withColumn("sentiment",get_sentiment_udf(col("tweet")))
+tweets = tweets.withColumn("sentiment_positive",get_sentiment_udf(col("tweet")))
+tweets = tweets.withColumn("sentiment_negative", 1 - col("sentiment_positive")))
 
 
 # Specify windowing
@@ -138,11 +139,11 @@ tweets_aggregated = tweets \
   ).count()
 
 
-# Fit schema for output
-#tweets_aggregated = tweets_aggregated.select( \
-#  col("company"), \
-#  col("count").alias("tweet_count")
-#)
+
+tweets_aggregated = tweets_aggregated.select( \
+  col("company"), \
+  col("count").alias("tweet_count")
+)
 
 
 
@@ -154,9 +155,9 @@ tweets_aggregated = tweets \
 # use append for non aggregated data
 # use complete for aggregation
 # used update for only last aggregate
-output = tweets_aggregated \
+output = tweets \
     .writeStream \
-    .outputMode("update") \
+    .outputMode("append") \
     .format("console") \
     .start()
 

@@ -146,7 +146,7 @@ tweets_aggregated = tweets \
   ).agg( \
     sum("sentiment_positive").alias("sentiment_positive"),
     sum("sentiment_negative").alias("sentiment_negative"),
-    count(lit(1)).alias("count")
+    count(lit(1)).alias("tweet_count")
     )
 
 # Create fraction for sentiments and add timestamp
@@ -160,7 +160,8 @@ tweets_aggregated = tweets_aggregated.select( \
   col("company"),
   col("sentiment_positive"),
   col("sentiment_negative"),
-  col("count").alias("tweet_count")
+  col("tweet_count")
+  col("time")
 )
 
 

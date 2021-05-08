@@ -84,7 +84,7 @@ tweets_aggregated = tweets_aggregated.withWatermark("process_time", "10 seconds"
 # use complete for aggregation
 query = tweets_aggregated \
     .writeStream \
-    .outputMode("complete") \
+    .outputMode("append") \
     .format("console") \
     .start()
 

@@ -80,7 +80,7 @@ tweets_aggregated = tweets.groupBy(
 # use complete for aggregation
 query = tweets_aggregated \
     .writeStream \
-    .outputMode("complete") \
+    .outputMode("append") \
     .format("console") \
     .start()
 

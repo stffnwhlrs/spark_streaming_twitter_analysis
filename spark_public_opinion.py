@@ -3,6 +3,9 @@ from pyspark.streaming import StreamingContext
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
+import requests as re
+
+impr
 
 # ------ HELPER FUNCTIONS -------
 

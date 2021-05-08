@@ -134,15 +134,15 @@ window_length = "10 seconds"
 tweets_aggregated = tweets \
 .withWatermark("process_time", window_length).groupBy(
   window(tweets.process_time, window_length),
-  tweets.company
+  tweets.company, tweets.sentiment
   ).count()
 
 
 # Fit schema for output
-tweets_aggregated = tweets_aggregated.select( \
-  col("company"), \
-  col("count").alias("tweet_count")
-)
+#tweets_aggregated = tweets_aggregated.select( \
+#  col("company"), \
+#  col("count").alias("tweet_count")
+#)
 
 
 
@@ -154,7 +154,7 @@ tweets_aggregated = tweets_aggregated.select( \
 # use append for non aggregated data
 # use complete for aggregation
 # used update for only last aggregate
-output = tweets \
+output = tweets_aggregated \
     .writeStream \
     .outputMode("append") \
     .format("console") \

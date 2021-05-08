@@ -183,7 +183,7 @@ if args.action == "console":
 
 elif args.action == "topic":  
   output = tweets_aggregated \
-    .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
+    .selectExpr("to_json(struct(*)) AS value") \
     .writeStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \

@@ -78,7 +78,7 @@ tweets_aggregated = tweets.groupBy(
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation
-query = tweets \
+query = tweets_aggregated \
     .writeStream \
     .outputMode("complete") \
     .format("console") \

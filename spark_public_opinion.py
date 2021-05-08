@@ -144,6 +144,9 @@ tweets_aggregated = tweets \
     count(lit(1)).alias("count")
     )
 
+# Create fraction for sentiments
+tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sentiment_positive") / col("count")) \
+  .withColumn("sentiment_negative", col("sentiment_negative") / col("count"))
 
 
 #tweets_aggregated = tweets_aggregated.select( \

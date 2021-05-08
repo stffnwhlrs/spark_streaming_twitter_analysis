@@ -5,6 +5,11 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 import requests as re
 import statistics as stats
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("action", choices=['console', 'topic'])
+args = parser.parse_args()
 
 
 # ------ HELPER FUNCTIONS -------
@@ -144,15 +149,19 @@ tweets_aggregated = tweets \
     count(lit(1)).alias("count")
     )
 
-# Create fraction for sentiments
+# Create fraction for sentiments and add timestamp
 tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sentiment_positive") / col("count")) \
-  .withColumn("sentiment_negative", col("sentiment_negative") / col("count"))
+  .withColumn("sentiment_negative", col("sentiment_negative") / col("tweet_count")) \
+    .withColumn("time", current_timestamp())
 
 
-#tweets_aggregated = tweets_aggregated.select( \
-#  col("company"), \
-#  col("count").alias("tweet_count")
-#)
+# Define output
+tweets_aggregated = tweets_aggregated.select( \
+  col("company"),
+  col("sentiment_positive"),
+  col("sentiment_negative")
+  col("count").alias("tweet_count")
+)
 
 
 
@@ -164,18 +173,27 @@ tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sent
 # use append for non aggregated data
 # use complete for aggregation
 # used update for only last aggregate
-output = tweets_aggregated \
+
+if args.action == "console":
+  output = tweets_aggregated \
+    .writeStream \
+    .outputMode("update") \
+    .format("console") \
+    .start()
+elif args.action == "topic"
+  output = tweets_aggregated \
     .writeStream \
     .outputMode("update") \
     .format("console") \
     .start()
 
 
+
 output.awaitTermination()
 
 
 if __name__ == "__main__":
-    print("lol")
+
 
 
 # spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py

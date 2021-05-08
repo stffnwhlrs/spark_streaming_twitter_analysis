@@ -185,6 +185,7 @@ elif args.action == "topic":
   output = tweets_aggregated \
     .selectExpr("to_json(struct(*)) AS value") \
     .writeStream \
+    .outputMode("update") \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("topic", "twitterPublicOutput") \

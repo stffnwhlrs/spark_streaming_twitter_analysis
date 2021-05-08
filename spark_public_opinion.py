@@ -124,7 +124,7 @@ tweets = tweets.filter(~(tweets.company == "-"))
 
 # Add sentiment
 tweets = tweets.withColumn("sentiment_positive",get_sentiment_udf(col("tweet")))
-tweets = tweets.withColumn("sentiment_negative", 1 - col("sentiment_positive")))
+tweets = tweets.withColumn("sentiment_negative", 1 - col("sentiment_positive"))
 
 
 # Specify windowing

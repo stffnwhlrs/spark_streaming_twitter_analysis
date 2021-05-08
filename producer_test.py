@@ -38,7 +38,7 @@ def send_file(file_path, topic):
         print("Send:", message, "to:",topic)
         producer.produce(topic, value=message)
         # add a delay between messages
-        time.sleep(3)
+        time.sleep(1)
 
 
 

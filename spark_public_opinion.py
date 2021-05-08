@@ -82,7 +82,7 @@ tweets_aggregated = tweets \
 # use complete for aggregation
 query = tweets_aggregated \
     .writeStream \
-    .outputMode("append") \
+    .outputMode("update") \
     .format("console") \
     .start()
 

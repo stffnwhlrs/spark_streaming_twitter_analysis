@@ -5,7 +5,6 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 import requests as re
 
-impr
 
 # ------ HELPER FUNCTIONS -------
 

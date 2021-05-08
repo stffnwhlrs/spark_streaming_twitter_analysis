@@ -56,7 +56,7 @@ raw_input.printSchema()
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
 #Select only the text and insert process time
-tweets = tweets.select(col("tweet.text").alias("tweet")).withColumn("process_time", current_timestamp())
+tweets = tweets.select(col("tweet.text").alias("tweet")).withColumn("timestamp", current_timestamp())
 
 # print schema of the new structured stream
 print("Data Schema tweets:")
@@ -66,8 +66,8 @@ tweets.printSchema()
 tweets = tweets.withColumn("content", get_content_udf(col("tweet")))
 
 tweets_aggregated = tweets \
-.withWatermark("process_time", "10 seconds").groupBy(
-  window(tweets.process_time, "10 seconds"),
+.withWatermark("timestamp", "10 seconds").groupBy(
+  window(tweets.timestamp, "10 seconds"),
   tweets.content
   ).count()
 

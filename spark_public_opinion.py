@@ -72,7 +72,6 @@ tweets_aggregated = tweets \
   tweets.content
   ).count()
 
-tweets_aggregated = tweets_aggregated.withWatermark("process_time", "10 seconds")
 
 
 

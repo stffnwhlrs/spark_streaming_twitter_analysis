@@ -4,11 +4,17 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 import requests as re
+import statistics as stats
 
 
 # ------ HELPER FUNCTIONS -------
 
+
 def get_content(tweet):
+  """
+  Extract the company out of the tweet
+  """
+
   tesla = ["Tesla", "tesla"]
   
   if any(map(tweet.__contains__, tesla)):
@@ -16,7 +22,53 @@ def get_content(tweet):
   else: 
     return "-"
 
+# Create UDF
 get_content_udf = udf(get_content, StringType())
+
+
+def get_sentiment(tweet):
+  """
+  Helper function that extracts the sentiment of each tweet
+  1 = positive
+  0 = negative 
+  """
+
+  # Do the API request (Stanford Sentiment)
+  r = re.post(
+      "https://api.deepai.org/api/sentiment-analysis",
+      data={
+          'text': tweet,
+      },
+      headers={'api-key': 'ca26882d-52af-4903-b0f7-571801ebd67a'}
+  )
+
+  # Get only the output array. Each sentence has its own sentiments
+  result = r.json()["output"]
+
+  # Map strings to integers helper function
+  def classify(sentiment):
+    sentiment = sentiment.lower()
+    if sentiment == "verynegative":
+      return -2
+    elif sentiment == "negative":
+      return -1
+    elif sentiment == "positive":
+      return 1
+    elif sentiment == "verypositive":
+      return 2
+    else:
+      return 0
+
+  # Map strings to integers helper function
+  result = list( map(classify, result))
+
+  # Calculate the entire
+  result = stats.mean(result)
+    
+  return 1 if result >= 0 else 0
+
+# Create UDF
+get_sentiment_udf = udf(get_sentiment, StringType())
 
 
 # ------ SPARK PROCESS -------
@@ -70,6 +122,9 @@ tweets = tweets.withColumn("company", get_content_udf(col("tweet")))
 # Filter not interesting tweets
 tweets = tweets.filter(~(tweets.company == "-"))
 
+# Add sentiment
+tweets = tweets.withColumn("sentiment",get_sentiment_udf(col("tweet")))
+
 
 # Specify windowing
 window_length = "10 seconds"
@@ -98,14 +153,15 @@ tweets_aggregated = tweets_aggregated.select( \
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation
-query = tweets_aggregated \
+# used update for only last aggregate
+output = tweets \
     .writeStream \
-    .outputMode("update") \
+    .outputMode("append") \
     .format("console") \
     .start()
 
 
-query.awaitTermination()
+output.awaitTermination()
 
 
 if __name__ == "__main__":

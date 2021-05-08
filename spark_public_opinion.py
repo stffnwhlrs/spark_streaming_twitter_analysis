@@ -65,6 +65,12 @@ tweets.printSchema()
 # Extract the content of the tweet
 tweets = tweets.withColumn("content", get_content_udf(col("tweet")))
 
+tweets_aggregated = tweets.groupBy(
+  window(tweets.process_time, "10 seconds"),
+  tweets.content
+  ).count()
+
+
 
   
 

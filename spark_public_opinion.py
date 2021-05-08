@@ -156,7 +156,7 @@ tweets_aggregated = tweets \
 # used update for only last aggregate
 output = tweets_aggregated \
     .writeStream \
-    .outputMode("append") \
+    .outputMode("update") \
     .format("console") \
     .start()
 

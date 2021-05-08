@@ -122,8 +122,10 @@ tweets = tweets.withColumn("company", get_content_udf(col("tweet")))
 # Filter not interesting tweets
 tweets = tweets.filter(~(tweets.company == "-"))
 
-# Add sentiment
+# ADD SENTIMENT
+# Positive
 tweets = tweets.withColumn("sentiment_positive",get_sentiment_udf(col("tweet")))
+# Add additional negative for easier count
 tweets = tweets.withColumn("sentiment_negative", 1 - col("sentiment_positive"))
 
 
@@ -132,11 +134,15 @@ window_length = "10 seconds"
 # sliding_interval = "0 seconds"
 
 # Aggreagte tweets
-#tweets_aggregated = tweets \
-#.withWatermark("process_time", window_length).groupBy(
-#  window(tweets.process_time, window_length),
-#  tweets.company, tweets.sentiment
-#  ).count()
+tweets_aggregated = tweets \
+  .withWatermark("process_time", window_length).groupBy(
+    window(tweets.process_time, window_length),
+    tweets.company
+  ).agg( \
+    sum("sentiment_positive").alias("sentiment_positive"),
+    sum("sentiment_negative").alias("sentiment_negative"),
+    count(lit(1)).alias("count")
+    )
 
 
 
@@ -155,7 +161,7 @@ window_length = "10 seconds"
 # use append for non aggregated data
 # use complete for aggregation
 # used update for only last aggregate
-output = tweets \
+output = tweets_aggregated \
     .writeStream \
     .outputMode("append") \
     .format("console") \

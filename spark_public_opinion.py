@@ -132,18 +132,18 @@ window_length = "10 seconds"
 # sliding_interval = "0 seconds"
 
 # Aggreagte tweets
-tweets_aggregated = tweets \
-.withWatermark("process_time", window_length).groupBy(
-  window(tweets.process_time, window_length),
-  tweets.company, tweets.sentiment
-  ).count()
+#tweets_aggregated = tweets \
+#.withWatermark("process_time", window_length).groupBy(
+#  window(tweets.process_time, window_length),
+#  tweets.company, tweets.sentiment
+#  ).count()
 
 
 
-tweets_aggregated = tweets_aggregated.select( \
-  col("company"), \
-  col("count").alias("tweet_count")
-)
+#tweets_aggregated = tweets_aggregated.select( \
+#  col("company"), \
+#  col("count").alias("tweet_count")
+#)
 
 
 

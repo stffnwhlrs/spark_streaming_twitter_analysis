@@ -78,7 +78,6 @@ get_sentiment_udf = udf(get_sentiment, StringType())
 
 # ------ SPARK PROCESS -------
 
-
 spark = SparkSession.builder\
                     .appName('Tweet Sentiment Analysis')\
                     .getOrCreate()
@@ -181,11 +180,14 @@ if args.action == "console":
     .outputMode("update") \
     .format("console") \
     .start()
-elif args.action == "topic":
+
+elif args.action == "topic":  
   output = tweets_aggregated \
+    .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
     .writeStream \
-    .outputMode("update") \
-    .format("console") \
+    .format("kafka") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
+    .option("topic", "twitterPublicOutput") \
     .start()
 
 

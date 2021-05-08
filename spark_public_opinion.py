@@ -160,7 +160,7 @@ tweets_aggregated = tweets_aggregated.select( \
   col("company"),
   col("sentiment_positive"),
   col("sentiment_negative"),
-  col("tweet_count")
+  col("tweet_count"),
   col("time")
 )
 

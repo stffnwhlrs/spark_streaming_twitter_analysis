@@ -8,9 +8,7 @@ parser.add_argument("-t", "--topic",  help="topic to read from")
 args = parser.parse_args()
 
 def display_message(message):
-  print("- '%s' %s %d %d" %
-        (message.value(), message.topic(), message.offset(),
-         message.timestamp()[1]))
+  print(message.value())
 
 
 conf = {'bootstrap.servers': "localhost:9092",

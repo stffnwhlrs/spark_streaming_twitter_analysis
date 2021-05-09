@@ -21,11 +21,15 @@ def get_content(tweet):
   """
 
   tesla = ["Tesla", "tesla"]
+  apple = ["Apple", "apple"]
   
   if any(map(tweet.__contains__, tesla)):
     return "tesla"
-  else: 
+  elif any(map(tweet.__contains__, apple)):
+    return "apple"
+  else:
     return "-"
+    
 
 # Create UDF
 get_content_udf = udf(get_content, StringType())

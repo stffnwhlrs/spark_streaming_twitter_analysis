@@ -203,7 +203,7 @@ elif args.action == "topic":
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("topic", "twitterInfluencersOutput") \
-    .option("checkpointLocation", "/tmp/steffen/checkpoint") \
+    .option("checkpointLocation", "/tmp/steffen/checkpoint_influencers") \
     .start()
 
 

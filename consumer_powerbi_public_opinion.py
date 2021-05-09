@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
 from confluent_kafka import Consumer, KafkaError, KafkaException
-# import argparse 
-
+import json
 import pandas as pd
 import requests
 

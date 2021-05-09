@@ -154,7 +154,7 @@ window_length = "10 seconds"
 tweets_aggregated = tweets \
   .withWatermark("process_time", window_length).groupBy(
     window(tweets.process_time, window_length),
-    tweets.user, tweets.company
+    tweets.company
   ).agg( \
     sum("sentiment_positive").alias("sentiment_positive"),
     sum("sentiment_negative").alias("sentiment_negative"),

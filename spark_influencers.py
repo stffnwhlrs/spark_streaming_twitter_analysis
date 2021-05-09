@@ -202,7 +202,7 @@ elif args.action == "topic":
     .outputMode("update") \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \
-    .option("topic", "twitterPublicOutput") \
+    .option("topic", "twitterInfluencersOutput") \
     .option("checkpointLocation", "/tmp/steffen/checkpoint") \
     .start()
 
@@ -216,4 +216,4 @@ if __name__ == "__main__":
 
 
 
-# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py console
+# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_influencers.py console

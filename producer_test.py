@@ -38,25 +38,22 @@ def send_file(file_path, topic):
         print("Send:", message, "to:",topic)
         producer.produce(topic, value=message)
         # add a delay between messages
-        time.sleep(3)
+        time.sleep(1)
 
 
 
 # Action dispatching
 if args.action == "manually":
-    if args.topic = None:
+    if args.topic == None:
         print("Specify topic")
-        return
 
     send_message(args.topic)
 
 elif args.action == "file":
-    if args.topic = None:
+    if args.topic == None:
         print("Specify topic")
-        return
-    if args.file = None:
+    if args.file == None:
         print("Specify file")
-        return
 
     send_file(args.file, args.topic)
 

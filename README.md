@@ -34,3 +34,22 @@ To subscribe to a topic, you need to specify the topic while executing the pytho
 ```shell 
 python3 consumer_test.py -t twitterPublic
 ``` 
+
+# 4. Run the producer: Test Producer
+The *producer_test* producer is a simple consumer to write either manually or a file to a specified topic
+- `manually`: write your own text
+- `file`: write file
+- `-t`: the topic to write to
+- `-f`: the file path 
+
+```shell
+python3 producer_test.py manually -t twitterPublic
+python3 producer_test.py file -t twitterPublic -f data_powerbi_test.json
+
+```
+
+# 5. Run public opinion
+
+```shell
+spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py
+```

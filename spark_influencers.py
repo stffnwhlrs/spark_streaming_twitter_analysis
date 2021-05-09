@@ -108,7 +108,7 @@ raw_input = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
-  .option("subscribe", "twitterPublic") \
+  .option("subscribe", "twitterInfluencers") \
   .option("startingOffsets", "latest") \
   .option("failOnDataLoss", "false") \
   .load()

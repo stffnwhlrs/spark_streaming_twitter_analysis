@@ -52,7 +52,10 @@ class TwitterStreamer():
             auth = self.twitterAuth.authenticateTwitterApp()
             stream = Stream(auth, listener)
             # Get sample data from twitter
-            stream.filter(follow=["929886734","44196397"])
+            # elon musk: 44196397
+            # steffen: 929886734
+            # chamath: 3291691
+            stream.filter(follow=["3291691"])
 
 
 class ListenerTS(StreamListener):
@@ -61,7 +64,7 @@ class ListenerTS(StreamListener):
         tweet_raw = json.loads(raw_data)
         tweet = {
             "text": tweet_raw["text"],
-            "user": tweet_raw["id"]
+            "user": "chamath"
         }
         tweet_str = json.dumps(tweet)
 
@@ -75,3 +78,6 @@ class ListenerTS(StreamListener):
 if __name__ == "__main__":
     TS = TwitterStreamer()
     TS.stream_tweets()
+
+
+# python3 producer_twitter_steffen.py  debug

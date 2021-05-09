@@ -52,7 +52,7 @@ class TwitterStreamer():
             auth = self.twitterAuth.authenticateTwitterApp()
             stream = Stream(auth, listener)
             # Get sample data from twitter
-            stream.filter(follow=["929886734"])
+            stream.filter(follow=["929886734","44196397"])
 
 
 class ListenerTS(StreamListener):

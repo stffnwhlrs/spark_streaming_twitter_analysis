@@ -92,7 +92,7 @@ get_sentiment_udf = udf(get_sentiment, StringType())
 # ------ SPARK PROCESS -------
 
 spark = SparkSession.builder\
-                    .appName('Tweet Sentiment Analysis')\
+                    .appName('Tweet Sentiment Analysis: Influencers')\
                     .getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")

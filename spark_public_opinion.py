@@ -20,8 +20,8 @@ def get_content(tweet):
   Extract the company out of the tweet
   """
 
-  tesla = ["Tesla", "tesla"]
-  apple = ["Apple", "apple"]
+  tesla = ["Tesla", "tesla", "tsla", "TSLA", "#tsla", "#TSLA"]
+  apple = ["Apple", "apple", "aapl", "AAPL", "#aapl", "#AAPL"]
   
   if any(map(tweet.__contains__, tesla)):
     return "tesla"

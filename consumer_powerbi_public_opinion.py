@@ -12,10 +12,17 @@ conf = {'bootstrap.servers': "localhost:9092",
 consumer = Consumer(conf)
 consumer.subscribe(["twitterPublicOutput"])
     
+
 def send_rest(message):
-  print(message.value())
   message = json.loads(message.value())
-  print(message)
+  data [message]
+  
+  url = "https://api.powerbi.com/beta/73458443-1627-4091-8b39-2222134907c5/datasets/20792726-b470-438e-a12c-6c99b9bba033/rows?key=p9e7FOz8G%2FkXhiHCGQ1rzm1MydzL8r26XyMdMcFcRMFWY4h6sUv4uatSqNQeR36ZC0%2FFDNwTbxsFJzboM57bZg%3D%3D"
+
+  response = requests.post(url,json=data)
+  print(response)
+
+
 
 while True:
     message = consumer.poll(timeout=1.0)

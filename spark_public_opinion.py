@@ -127,7 +127,7 @@ raw_input.printSchema()
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
 #Select only the text and insert process time
-tweets = tweets.select(col("tweet.text").alias("tweet"),col("tweet.user").alias("user")).withColumn("process_time", current_timestamp())
+tweets = tweets.select(col("tweet.text").alias("tweet"),).withColumn("process_time", current_timestamp())
 
 # print schema of the new structured stream
 print("Data Schema tweets:")

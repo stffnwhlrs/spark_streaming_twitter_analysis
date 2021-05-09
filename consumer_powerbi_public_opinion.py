@@ -15,7 +15,7 @@ consumer.subscribe(["twitterPublicOutput"])
     
 def send_rest(message):
   print(message.value())
-  message = json.loads((message.value())
+  message = json.loads(message.value())
   print(message)
 
 while True:

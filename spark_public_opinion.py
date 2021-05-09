@@ -22,11 +22,20 @@ def get_content(tweet):
 
   tesla = ["Tesla", "tesla", "tsla", "TSLA", "#tsla", "#TSLA"]
   apple = ["Apple", "apple", "aapl", "AAPL", "#aapl", "#AAPL"]
+  google = ["Google", "google", "googl", "GOOGL", "#googl", "#GOOGL"]
+  bayer = ["Bayer", "bayer", "bayn", "BAYN", "#bayn", "#BAYN"]
+  bitcoin = ["Bitcoin", "bitcoin"]
   
   if any(map(tweet.__contains__, tesla)):
     return "tesla"
   elif any(map(tweet.__contains__, apple)):
     return "apple"
+  elif any(map(tweet.__contains__, google)):
+    return "google"
+  elif any(map(tweet.__contains__, bayer)):
+    return "bayer"
+  elif any(map(tweet.__contains__, bitcoin)):
+    return "bitcoin"
   else:
     return "-"
     

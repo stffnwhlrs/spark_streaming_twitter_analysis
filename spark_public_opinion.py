@@ -162,9 +162,9 @@ tweets_aggregated = tweets \
     )
 
 # Create fraction for sentiments and add timestamp
-tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sentiment_positive") / col("tweet_count")) \
-  .withColumn("sentiment_negative", col("sentiment_negative") / col("tweet_count")) \
-    .withColumn("time", current_timestamp())
+#tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sentiment_positive") / col("tweet_count")) \
+#  .withColumn("sentiment_negative", col("sentiment_negative") / col("tweet_count")) \
+#    .withColumn("time", current_timestamp())
 
 
 # Define output
@@ -172,8 +172,8 @@ tweets_aggregated = tweets_aggregated.select( \
   col("company"),
   col("sentiment_positive"),
   col("sentiment_negative"),
-  col("tweet_count"),
-  col("time")
+  col("tweet_count")#,
+ # col("time")
 )
 
 

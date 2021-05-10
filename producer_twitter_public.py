@@ -52,7 +52,17 @@ class TwitterStreamer():
             auth = self.twitterAuth.authenticateTwitterApp()
             stream = Stream(auth, listener)
             # Get sample data from twitter
-            stream.sample(stall_warnings=True, languages= ["en"])
+            #stream.sample(stall_warnings=True, languages= ["en"])
+            list_to_follow = [
+                "Tesla", "tesla", "tsla", "TSLA", "#tsla", "#TSLA",
+                "Apple", "apple", "aapl", "AAPL", "#aapl", "#AAPL",
+                "Google", "google", "googl", "GOOGL", "#googl", "#GOOGL",
+                "Bayer", "bayer", "bayn", "BAYN", "#bayn", "#BAYN",
+                "Bitcoin", "bitcoin"
+            ]
+            
+            stream.filter(track=list_to_follow,stall_warnings=True, languages= ["en"])
+
 
 
 class ListenerTS(StreamListener):

@@ -60,7 +60,7 @@ class TwitterStreamer():
                 "Bayer", "bayer", "bayn", "BAYN", "#bayn", "#BAYN",
                 "Bitcoin", "bitcoin"
             ]
-            
+
             stream.filter(track=list_to_follow,stall_warnings=True, languages= ["en"])
 
 
@@ -84,3 +84,5 @@ class ListenerTS(StreamListener):
 if __name__ == "__main__":
     TS = TwitterStreamer()
     TS.stream_tweets()
+
+# python3 producer_twitter_public.py debug

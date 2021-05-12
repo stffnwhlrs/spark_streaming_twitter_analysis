@@ -176,12 +176,6 @@ tweets_aggregated = tweets_aggregated.select( \
   col("time")
 )
 
-
-
-
-  
-
-
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation
@@ -208,11 +202,6 @@ elif args.action == "topic":
 
 
 output.awaitTermination()
-
-
-if __name__ == "__main__":
-  print("lol")
-
 
 
 # spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py console

@@ -21,7 +21,7 @@ Run the bash script `setup_kafka_env.sh` to start the Kafka environment and crea
 ```shell
 sudo bash setup_kafka_env.sh
 ```
-## Exeute the pubplic opnion data process
+## Exeute the pubplic opinion data process
 
 ### 2. Run producer: Twitter public
 The twitter public producer fetches tweets from Twitter that belong to Apple, Bayer, Bitcoin, Google, Tesla, and publish them into the *twitterPublic* topic. The producer only inserts the *text* field (the text message) of the whole tweet object to reduce the payload of the event. The producer can be run in two different modes which can be specified when executing the python script:

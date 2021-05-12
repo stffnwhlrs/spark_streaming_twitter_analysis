@@ -26,7 +26,7 @@ conf = {'bootstrap.servers': "localhost:9092",
 producer = Producer(conf)
 
 # topic to write to
-topic_name = "twitterPublic"
+topic_name = "twitterInfluencers"
 
 # Twitter authentication
 class twitterAuth():
@@ -52,17 +52,10 @@ class TwitterStreamer():
             auth = self.twitterAuth.authenticateTwitterApp()
             stream = Stream(auth, listener)
             # Get sample data from twitter
-            #stream.sample(stall_warnings=True, languages= ["en"])
-            list_to_follow = [
-                "Tesla", "tesla", "tsla", "TSLA", "#tsla", "#TSLA",
-                "Apple", "apple", "aapl", "AAPL", "#aapl", "#AAPL",
-                "Google", "google", "googl", "GOOGL", "#googl", "#GOOGL",
-                "Bayer", "bayer", "bayn", "BAYN", "#bayn", "#BAYN",
-                "Bitcoin", "bitcoin"
-            ]
-
-            stream.filter(track=list_to_follow,stall_warnings=True, languages= ["en"])
-
+            # elon musk: 44196397
+            # steffen: 929886734
+            # chamath: 3291691
+            stream.filter(follow=["929886734"])
 
 
 class ListenerTS(StreamListener):
@@ -71,6 +64,7 @@ class ListenerTS(StreamListener):
         tweet_raw = json.loads(raw_data)
         tweet = {
             "text": tweet_raw["text"],
+            "user": "steffen"
         }
         tweet_str = json.dumps(tweet)
 
@@ -85,4 +79,5 @@ if __name__ == "__main__":
     TS = TwitterStreamer()
     TS.stream_tweets()
 
-# python3 producer_twitter_public.py debug
+
+# python3 producer_twitter_steffen.py debug

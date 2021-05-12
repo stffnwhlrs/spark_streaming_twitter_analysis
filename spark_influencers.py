@@ -92,7 +92,7 @@ get_sentiment_udf = udf(get_sentiment, StringType())
 # ------ SPARK PROCESS -------
 
 spark = SparkSession.builder\
-                    .appName('Tweet Sentiment Analysis: Influencers')\
+                    .appName('Tweet Sentiment Analysis: Public opinion')\
                     .getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")
@@ -100,7 +100,7 @@ spark.sparkContext.setLogLevel("ERROR")
 # Create the schema for input data
 schema = StructType([ \
   StructField("text", StringType(), True),
-  StructField("created_at", StringType(), True) \
+  StructField("user", StringType(), True) \
     ])
 
 # Get the stream
@@ -108,7 +108,7 @@ raw_input = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
-  .option("subscribe", "twitterPublic") \
+  .option("subscribe", "twitterInfluencers") \
   .option("startingOffsets", "latest") \
   .option("failOnDataLoss", "false") \
   .load()
@@ -127,7 +127,7 @@ raw_input.printSchema()
 tweets = raw_input.select(from_json(raw_input.value, schema).alias("tweet"))
 
 #Select only the text and insert process time
-tweets = tweets.select(col("tweet.text").alias("tweet"),).withColumn("process_time", current_timestamp())
+tweets = tweets.select(col("tweet.text").alias("tweet"), col("tweet.user").alias("user")).withColumn("process_time", current_timestamp())
 
 # print schema of the new structured stream
 print("Data Schema tweets:")
@@ -154,7 +154,7 @@ window_length = "10 seconds"
 tweets_aggregated = tweets \
   .withWatermark("process_time", window_length).groupBy(
     window(tweets.process_time, window_length),
-    tweets.company
+    tweets.user, tweets.company
   ).agg( \
     sum("sentiment_positive").alias("sentiment_positive"),
     sum("sentiment_negative").alias("sentiment_negative"),
@@ -169,12 +169,19 @@ tweets_aggregated = tweets_aggregated.withColumn("sentiment_positive", col("sent
 
 # Define output
 tweets_aggregated = tweets_aggregated.select( \
+  col("user"),
   col("company"),
   col("sentiment_positive"),
   col("sentiment_negative"),
   col("tweet_count"),
   col("time")
 )
+
+
+
+
+  
+
 
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
@@ -195,8 +202,8 @@ elif args.action == "topic":
     .outputMode("update") \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \
-    .option("topic", "twitterPublicOutput") \
-    .option("checkpointLocation", "/tmp/steffen/checkpoint") \
+    .option("topic", "twitterInfluencersOutput") \
+    .option("checkpointLocation", "/tmp/steffen/checkpoint_influencers") \
     .start()
 
 
@@ -204,4 +211,9 @@ elif args.action == "topic":
 output.awaitTermination()
 
 
-# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_public_opinion.py console
+if __name__ == "__main__":
+  print("lol")
+
+
+
+# spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_influencers.py console

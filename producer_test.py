@@ -59,3 +59,5 @@ elif args.action == "file":
 
 else:
     print("Specify action")
+
+# python3 producer_test.py file -t twitterPublic -f tweet_example_easy.json

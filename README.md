@@ -61,7 +61,6 @@ We created threee producer that fetch Twitter data from influencers. it fetches 
 python3 producer_twitter_elon.py normal
 ```
 
-
 ### 6. Run Spark: Influencers
 This Spark appliaction filters, adds a sentiment, and aggregates the tweets per influencers and company
 
@@ -77,10 +76,14 @@ spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 spark_i
 This application consumes the data from the specific topic and sends it via REST request to PowerBI
 
 ```shell
-python3 consumer_powerbi_public_opinion.py
+python3 python3 consumer_powerbi_influencers.py
 ```
 
 ### 8. Check the results in PowerBI
 We created several PowerBI Dashboards to visualize our results. You can check them out here (IE account needed):
 - https://app.powerbi.com/links/6Gl-PiJ4Un?ctid=73458443-1627-4091-8b39-2222134907c5&pbi_source=linkShare
 - https://app.powerbi.com/links/qqnEkp1qVw?ctid=73458443-1627-4091-8b39-2222134907c5&pbi_source=linkShare
+
+![Public opinion](https://github.com/stffnwhlrs/spra_group_project/blob/main/public_opinion.png)
+
+![Influencers](https://github.com/stffnwhlrs/spra_group_project/blob/main/influencers.png)

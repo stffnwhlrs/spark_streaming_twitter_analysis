@@ -80,4 +80,4 @@ if __name__ == "__main__":
     TS.stream_tweets()
 
 
-# python3 producer_twitter_steffen.py  debug
+# python3 producer_twitter_elon.py normal

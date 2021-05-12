@@ -177,12 +177,6 @@ tweets_aggregated = tweets_aggregated.select( \
   col("time")
 )
 
-
-
-
-  
-
-
 # Start running the query that prints the running counts to the console
 # use append for non aggregated data
 # use complete for aggregation

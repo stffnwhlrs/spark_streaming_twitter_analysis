@@ -1,7 +1,6 @@
 # spra_group_project
 
-This document describes how to set up and execute our spra group assignment. This project is developed on an iterative basis.
-
+This document describes how to set up and execute our spra group assignment. Please check the `presentation.pdf` to get more information.
 
 
 
